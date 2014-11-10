@@ -1,5 +1,7 @@
 
-int MOTORSPEED_PIN = 6;
+int MOTORSPEED_PIN_1 = 3;
+int MOTORSPEED_PIN_2 = 9;
+
 String inputString = "";         // a string to hold incoming data
 boolean stringComplete = false;  // whether the string is complete
 
@@ -9,21 +11,21 @@ void setup() {
   // reserve 200 bytes for the inputString:
   inputString.reserve(200);
   
-  analogWrite(MOTORSPEED_PIN,127);
-  digitalWrite(0,LOW);
+  setMotorSpeed(127);
+  digitalWrite(4,LOW);
 
-  digitalWrite(1,HIGH);
+  digitalWrite(5,HIGH);
 
-  digitalWrite(2,LOW);
+  digitalWrite(11,LOW);
 
-  digitalWrite(3,HIGH);  
+  digitalWrite(10,HIGH);  
 }
 
 void loop() {
    if (stringComplete) {
     int value = inputString.toInt();
     Serial.println(value);
-    analogWrite(MOTORSPEED_PIN,((value % 4) * 64));
+    setMotorSpeed(((value % 4) * 64));
     inputString = "";
     stringComplete = false;
   }
@@ -41,4 +43,9 @@ void serialEvent() {
       stringComplete = true;
     }
   }
+}
+
+void setMotorSpeed(int motor_speed) {
+  analogWrite(MOTORSPEED_PIN_1, motor_speed);
+  analogWrite(MOTORSPEED_PIN_2, motor_speed); 
 }
