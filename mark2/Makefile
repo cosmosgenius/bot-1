@@ -1,7 +1,7 @@
 TARGET = main
 
 MCU	= atmega8
-F_CPU = 8000000L
+F_CPU = 8000000UL
 
 CC = avr-gcc
 OBJCOPY = avr-objcopy
