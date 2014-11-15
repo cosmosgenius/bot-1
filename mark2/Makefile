@@ -9,16 +9,23 @@ OBJCOPY = avr-objcopy
 CFLAGS = -mmcu=$(MCU) -Wall -Os -std=gnu99 -DF_CPU=$(F_CPU) -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
 LDFLAGS = -mmcu=$(MCU) -Wl,-Map=main.map
 
-all: main.hex
+SRC = src/main.c
 
-main.hex: main.elf
-	$(OBJCOPY) -O ihex main.elf $@
+OBJS = $(SRC:.c=.o)
 
-main.elf: main.o
-	$(CC) $(LDFLAGS) -o $@ main.o
+all: $(TARGET).hex
 
-main.o: src/main.c
-	$(CC) $(CFLAGS) -c src/main.c -o $@
+$(TARGET).hex: $(TARGET).elf
+	@echo "Generating $< -> $@";
+	@$(OBJCOPY) -O ihex $< $@
+
+$(TARGET).elf: $(OBJS)
+	@echo "Linking $^ -> $@";
+	@$(CC) $^ $(LDFLAGS) -o $@
+
+%.o: %.c
+	@echo "building $< -> $@"; 
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	$(RM) *.o *.elf *.hex *.map
+	$(RM) *.elf *.hex *.map $(OBJS)
