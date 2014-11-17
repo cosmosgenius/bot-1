@@ -95,13 +95,7 @@ void mirf_set_TADDR(uint8_t * adr)
     mirf_write_register(TX_ADDR, adr,5);
 }
 
-#if defined(__AVR_ATmega8__)
-SIGNAL(SIG_INTERRUPT0) 
-#endif // __AVR_ATmega8__
-#if defined(__AVR_ATmega168__)
-SIGNAL(SIG_PIN_CHANGE2) 
-#endif // __AVR_ATmega168__  
-// Interrupt handler 
+ISR(INT0_vect)
 {
     uint8_t status;   
     // If still in transmitting mode then finish transmission
