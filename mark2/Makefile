@@ -12,7 +12,7 @@ TYPE = usbasp
 CFLAGS = -mmcu=$(MCU) -Wall -Os -std=gnu99 -DF_CPU=$(F_CPU) -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
 LDFLAGS = -mmcu=$(MCU) -Wl,-Map=main.map
 
-SRC = src/main.c src/RF24/mirf.c src/RF24/spi.c
+SRC = src/main.c
 
 OBJS = $(SRC:.c=.o)
 
