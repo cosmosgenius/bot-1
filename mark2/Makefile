@@ -4,17 +4,18 @@ MCU	= atmega8
 F_CPU = 8000000UL
 
 CC = avr-gcc
+CXX = avr-g++
 OBJCOPY = avr-objcopy
 
 PROGRAMMER = avrdude
 TYPE = usbasp
 
-CFLAGS = -mmcu=$(MCU) -Wall -Os -std=gnu99 -DF_CPU=$(F_CPU) -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
+CPPFLAGS = -mmcu=$(MCU) -Wall -Os -std=gnu++11 -DF_CPU=$(F_CPU) -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
 LDFLAGS = -mmcu=$(MCU) -Wl,-Map=main.map
 
-SRC = src/main.c
+SRC = src/main.cc src/wheel.cc
 
-OBJS = $(SRC:.c=.o)
+OBJS = $(SRC:.cc=.o)
 
 all: compile 
 
@@ -28,9 +29,9 @@ $(TARGET).elf: $(OBJS)
 	@echo "Linking $^ -> $@";
 	@$(CC) $^ $(LDFLAGS) -o $@
 
-%.o: %.c
+%.o: %.cc
 	@echo "building $< -> $@"; 
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CPPFLAGS) -c $< -o $@
 
 upload: compile
 	$(PROGRAMMER) -c $(TYPE) -p $(MCU) -u -U flash:w:$(TARGET).hex

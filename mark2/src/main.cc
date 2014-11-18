@@ -1,7 +1,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-intmain (void)
+int main (void)
 {
   DDRB |= _BV(DDB0); 
   
