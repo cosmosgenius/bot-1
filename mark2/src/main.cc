@@ -1,10 +1,10 @@
 #include <avr/io.h>
 #include <util/delay.h>
+#include "wheel.h"
 
 int main (void)
 {
-  DDRB |= _BV(DDB0); 
-  
+  DDRB |= _BV(DDB0);
   while(1) 
   {
     PORTB ^= _BV(PB0);
