@@ -13,7 +13,7 @@ TYPE = usbasp
 CPPFLAGS = -mmcu=$(MCU) -Wall -Os -std=gnu++11 -DF_CPU=$(F_CPU) -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
 LDFLAGS = -mmcu=$(MCU) -Wl,-Map=main.map
 
-SRC = src/main.cc src/wheel.cc
+SRC = src/main.cc
 
 OBJS = $(SRC:.cc=.o)
 
